@@ -48,6 +48,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (noBtn) {
         noBtn.addEventListener('mouseenter', makeNoButtonRunAway);
     }
+
+    // Initialize touch interactions for photo gallery on mobile
+    initializeTouchInteractions();
 });
 
 // Navigate to next stage
@@ -299,3 +302,98 @@ document.addEventListener('click', function(e) {
         button.appendChild(ripple);
     }
 });
+
+// Touch interactions for mobile photo gallery
+function initializeTouchInteractions() {
+    const photoItems = document.querySelectorAll('.photo-item');
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    if (!isTouchDevice) {
+        return; // Skip on non-touch devices
+    }
+
+    photoItems.forEach((photo, index) => {
+        let touchStartTime = 0;
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        // Handle touch start
+        photo.addEventListener('touchstart', function(e) {
+            touchStartTime = Date.now();
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+
+        // Handle touch end - toggle caption visibility
+        photo.addEventListener('touchend', function(e) {
+            const touchEndTime = Date.now();
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
+
+            // Check if it was a tap (not a swipe)
+            const timeDiff = touchEndTime - touchStartTime;
+            const xDiff = Math.abs(touchEndX - touchStartX);
+            const yDiff = Math.abs(touchEndY - touchStartY);
+
+            if (timeDiff < 300 && xDiff < 10 && yDiff < 10) {
+                // It's a tap! Toggle caption visibility
+                photo.classList.toggle('caption-visible');
+
+                // Add a subtle haptic feedback on supported devices
+                if (navigator.vibrate) {
+                    navigator.vibrate(10);
+                }
+            }
+        }, { passive: true });
+    });
+
+    // Enable pinch-to-zoom for photos in the collage area
+    const photoCollage = document.querySelector('.photo-collage');
+    if (photoCollage) {
+        let initialDistance = 0;
+        let currentScale = 1;
+
+        photoCollage.addEventListener('touchstart', function(e) {
+            if (e.touches.length === 2) {
+                e.preventDefault();
+                initialDistance = getDistance(e.touches[0], e.touches[1]);
+            }
+        });
+
+        photoCollage.addEventListener('touchmove', function(e) {
+            if (e.touches.length === 2) {
+                e.preventDefault();
+                const currentDistance = getDistance(e.touches[0], e.touches[1]);
+                const scale = currentDistance / initialDistance;
+                currentScale = Math.min(Math.max(scale, 0.8), 1.5);
+
+                // Apply scale to all photos for zoom effect
+                photoItems.forEach(photo => {
+                    photo.style.transform = `scale(${currentScale})`;
+                });
+            }
+        });
+
+        photoCollage.addEventListener('touchend', function(e) {
+            if (e.touches.length < 2) {
+                // Reset scale smoothly
+                photoItems.forEach(photo => {
+                    photo.style.transition = 'transform 0.3s ease';
+                    photo.style.transform = '';
+                    setTimeout(() => {
+                        photo.style.transition = '';
+                    }, 300);
+                });
+                initialDistance = 0;
+                currentScale = 1;
+            }
+        });
+    }
+}
+
+// Helper function to calculate distance between two touch points
+function getDistance(touch1, touch2) {
+    const dx = touch1.clientX - touch2.clientX;
+    const dy = touch1.clientY - touch2.clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+}
