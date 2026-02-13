@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A special Valentine's Day message for someone special">
+    <title>Will You Be My Valentine? ❤️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Stage 0: Welcome -->
+    <section class="stage active" id="stage-0">
+        <div class="container">
+            <div class="welcome-content">
+                <h1 class="animated-title">
+                    <span class="heart-icon">💝</span>
+                    Dear Reet
+                    <span class="heart-icon">💝</span>
+                </h1>
+                <p class="subtitle">Something Very Special for you,</p>
+                <button class="next-btn" onclick="nextStage()" aria-label="Continue to next stage">
+                    Begin
+                    <span class="arrow">→</span>
+                </button>
+            </div>
+        </div>
+        <div class="floating-hearts" aria-hidden="true">
+            <span class="heart">❤️</span>
+            <span class="heart">💕</span>
+            <span class="heart">💖</span>
+            <span class="heart">💗</span>
+            <span class="heart">💓</span>
+            <span class="heart">💝</span>
+        </div>
+    </section>
+
+    <!-- Stage 1: Photo Collage -->
+    <section class="stage" id="stage-1">
+        <div class="container">
+            <h2 class="section-title">Moments of Love</h2>
+            <p class="section-subtitle">Every picture tells a story...</p>
+
+            <div class="memories-wrapper">
+                <div class="video-container">
+                    <video src="videos/v1.mp4" loop autoplay muted playsinline aria-label="Special moment video"></video>
+                </div>
+
+                <div class="photo-collage">
+                    <div class="photo-item photo-1">
+                        <img src="images/1.jpeg" alt="Special memory 1" loading="lazy">
+                    </div>
+                    <div class="photo-item photo-2">
+                        <img src="images/2.jpeg" alt="Special memory 2" loading="lazy">
+                    </div>
+                    <div class="photo-item photo-3">
+                        <img src="images/3.jpeg" alt="Special memory 3" loading="lazy">
+                    </div>
+                    <div class="photo-item photo-4">
+                        <img src="images/4.jpeg" alt="Special memory 4" loading="lazy">
+                    </div>
+                    <div class="photo-item photo-5">
+                        <img src="images/5.jpeg" alt="Special memory 5" loading="lazy">
+                    </div>
+                    <div class="photo-item photo-6">
+                        <img src="images/6.jpeg" alt="Special memory 6" loading="lazy">
+                    </div>
+                    <div class="photo-item photo-7">
+                        <img src="images/7.jpeg" alt="Special memory 7" loading="lazy">
+                    </div>
+                    <div class="photo-item photo-8">
+                        <img src="images/8.jpeg" alt="Special memory 8" loading="lazy">
+                    </div>
+                    <div class="photo-item photo-9">
+                        <img src="images/9.jpeg" alt="Special memory 9" loading="lazy">
+                    </div>
+                    <div class="photo-item photo-10">
+                        <img src="images/10.jpeg" alt="Special memory 10" loading="lazy">
+                    </div>
+                    <div class="photo-item photo-11">
+                        <img src="images/11.jpeg" alt="Special memory 11" loading="lazy">
+                    </div>
+                    <div class="photo-item photo-12">
+                        <img src="images/12.jpeg" alt="Special memory 12" loading="lazy">
+                    </div>
+                </div>
+            </div>
+
+            <button class="next-btn" onclick="nextStage()" aria-label="Continue to next stage">
+                Continue
+                <span class="arrow">→</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Stage 2: The Question -->
+    <section class="stage" id="stage-2">
+        <div class="container">
+            <div class="question-container">
+                <h2 class="big-question">
+                    Reet, Will You Be My Valentine
+                    <span class="for-life">For Life?</span>
+                </h2>
+                <div class="heart-pulse" aria-hidden="true">💖</div>
+                <p class="question-subtitle">This is the most important question I'll ever ask...</p>
+                <button class="next-btn" onclick="nextStage()" aria-label="See response options">
+                    <span class="arrow">→</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stage 3: Response -->
+    <section class="stage" id="stage-3">
+        <div class="container">
+            <div class="response-container">
+                <h3 class="response-title">Your Answer, Reet?</h3>
+                <p class="waiting-message">I've been waiting for this moment for so long... 💕</p>
+                <div class="persuasion-message" id="persuasion-message" aria-live="polite"></div>
+                <div class="button-container">
+                    <button class="yes-btn" id="yes-btn" onclick="handleYes()" aria-label="Yes, I will be your Valentine">
+                        Yes! 💕
+                    </button>
+                    <button class="no-btn" id="no-btn" onclick="handleNo()" aria-label="No, I won't be your Valentine">
+                        No
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Celebration Modal -->
+    <div class="celebration-modal" id="celebration-modal" role="dialog" aria-modal="true" aria-labelledby="celebration-title">
+        <div class="celebration-content">
+            <h2 id="celebration-title">🎉 Yes! 🎉</h2>
+            <p>You've made me the happiest person alive, Reet!</p>
+            <p class="celebration-subtitle">I promise to cherish every moment with you ❤️</p>
+            <p class="call-request">Now there's one more thing that would make this perfect...</p>
+            <p class="call-action">Please call me! 📱 I've been waiting so long to hear your sweet voice and share this special moment with you! 💝</p>
+            <div class="confetti-container" aria-hidden="true"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
