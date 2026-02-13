@@ -16,6 +16,10 @@
     --shadow: rgba(255, 107, 157, 0.3);
 }
 
+html{
+    font-size: 62.5%;
+}
+
 body {
     font-family: 'Playfair Display', 'Segoe UI', Tahoma, Geneva, Verdana, serif;
     line-height: 1.6;
@@ -890,104 +894,100 @@ body {
 
 @media (max-width: 480px) {
     .memories-wrapper {
-        min-height: auto;
-        padding: 20px 15px;
-        display: block;
+        min-height: 700px;
+        padding: 20px 10px;
+        display: flex;
     }
 
     .video-container {
-        max-width: 90%;
-        margin: 0 auto 40px;
-        transform: rotate(-1deg);
-        border-radius: 20px;
-        box-shadow: 0 12px 40px rgba(255, 107, 157, 0.5), 0 0 0 4px var(--secondary-pink);
+        max-width: 200px;
+        box-shadow: 0 10px 35px rgba(255, 107, 157, 0.5), 0 0 0 3px var(--secondary-pink);
         animation: gentlePulse 3s ease-in-out infinite;
     }
 
     @keyframes gentlePulse {
         0%, 100% {
-            box-shadow: 0 12px 40px rgba(255, 107, 157, 0.5), 0 0 0 4px var(--secondary-pink);
+            box-shadow: 0 10px 35px rgba(255, 107, 157, 0.5), 0 0 0 3px var(--secondary-pink);
         }
         50% {
-            box-shadow: 0 15px 50px rgba(255, 107, 157, 0.7), 0 0 0 5px var(--primary-pink);
+            box-shadow: 0 12px 45px rgba(255, 107, 157, 0.7), 0 0 0 4px var(--primary-pink);
         }
     }
 
     .photo-collage {
-        position: relative;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0;
-        margin-top: 30px;
-        padding: 0 5px;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
     }
 
     .photo-item {
-        position: relative !important;
-        width: calc(100% + 20px) !important;
-        height: 180px !important;
-        top: auto !important;
-        left: auto !important;
-        right: auto !important;
-        bottom: auto !important;
-        border-radius: 18px !important;
-        margin: -10px -10px;
-        z-index: 1;
+        width: 110px !important;
+        height: 110px !important;
+        border-radius: 15px !important;
+        padding: 6px;
     }
 
-    /* Create overlapping effect with alternating patterns */
-    .photo-item:nth-child(odd) {
-        transform: rotate(-2deg) !important;
-        margin-left: 0;
-        margin-right: -15px;
+    /* Smaller size variations for mobile */
+    .photo-2, .photo-6 {
+        width: 95px !important;
+        height: 95px !important;
     }
 
-    .photo-item:nth-child(even) {
-        transform: rotate(2deg) !important;
-        margin-left: -15px;
-        margin-right: 0;
+    .photo-3, .photo-11 {
+        width: 100px !important;
+        height: 100px !important;
     }
 
-    /* Subtle scale variations for depth */
-    .photo-item:nth-child(3n+1) {
-        z-index: 2;
+    .photo-5, .photo-9 {
+        width: 105px !important;
+        height: 105px !important;
     }
 
-    .photo-item:nth-child(3n+2) {
-        z-index: 3;
+    .photo-8, .photo-12 {
+        width: 100px !important;
+        height: 100px !important;
     }
 
-    .photo-item:nth-child(3n) {
-        z-index: 1;
-    }
+    /* Keep the scattered positioning - same layout as desktop */
+    .photo-1 { top: 2%; left: 1%; }
+    .photo-2 { top: 5%; left: 32%; }
+    .photo-3 { top: 1%; right: 1%; }
+    .photo-4 { top: 16%; right: 25%; }
+    .photo-5 { top: 32%; left: 0%; }
+    .photo-6 { top: 35%; left: 28%; }
+    .photo-7 { top: 32%; right: 0%; }
+    .photo-8 { top: 38%; right: 26%; }
+    .photo-9 { bottom: 5%; left: 1%; }
+    .photo-10 { bottom: 3%; left: 28%; }
+    .photo-11 { bottom: 5%; right: 1%; }
+    .photo-12 { bottom: 10%; right: 27%; }
 
-    /* Show captions on mobile by default (touch devices) */
+    /* Maintain rotations for romantic scattered effect */
+    .photo-1 { transform: rotate(-8deg); }
+    .photo-2 { transform: rotate(5deg); }
+    .photo-3 { transform: rotate(8deg); }
+    .photo-4 { transform: rotate(-6deg); }
+    .photo-5 { transform: rotate(7deg); }
+    .photo-6 { transform: rotate(-5deg); }
+    .photo-7 { transform: rotate(-10deg); }
+    .photo-8 { transform: rotate(6deg); }
+    .photo-9 { transform: rotate(9deg); }
+    .photo-10 { transform: rotate(-7deg); }
+    .photo-11 { transform: rotate(5deg); }
+    .photo-12 { transform: rotate(-8deg); }
+
     .photo-caption {
+        font-size: 0.7rem;
+        padding: 6px 8px;
+        opacity: 0;
+    }
+
+    /* Show caption on tap for touch devices */
+    .photo-item.caption-visible .photo-caption {
         opacity: 1;
         transform: translateY(0);
-        font-size: 0.8rem;
-        padding: 8px 10px;
-        background: linear-gradient(to top, rgba(255, 107, 157, 0.9), rgba(255, 107, 157, 0.6));
-    }
-
-    /* Make captions easier to tap */
-    .photo-item {
-        cursor: pointer;
-        -webkit-tap-highlight-color: transparent;
-    }
-
-    /* Touch interaction: slightly scale on tap */
-    .photo-item:active {
-        transform: scale(0.98) !important;
-        transition: transform 0.1s ease;
-    }
-
-    .photo-item:nth-child(odd):active {
-        transform: rotate(-2deg) scale(0.98) !important;
-    }
-
-    .photo-item:nth-child(even):active {
-        transform: rotate(2deg) scale(0.98) !important;
     }
 
     .stage {
